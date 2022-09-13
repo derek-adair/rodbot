@@ -41,7 +41,6 @@ function Xp.continuePath()
     Xp.CURRENT_MOVE = Xp.CURRENT_MOVE + 1
   else
     cecho("\n<red:yellow>You've reached the end of your path!")
-    Xp.stopPathing()
     Xp.CURRENT_MOVE = 1
   end
 end
