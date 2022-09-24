@@ -3,9 +3,21 @@
 Xp = Xp or {}
 
 Xp.CURRENT_MOVE = 1
-Xp.LOOP = false
-Xp.LOCATION = 'sreen'
-
+Xp.campMoves = {
+  -- Start outside liquor store w/ noyan/great noyan
+  'e','e',
+  'n','in',
+  'out','e','in',
+  'out','e','in',
+  'out','e','e','e','in',
+  'out','s','s','in',
+  'out','s','s','s','s','in',
+  'out', 'w','s','in',
+  'out','s',
+  'e',
+  -- start over
+  'n','n','n','n','n','n','n','n','w','w','w','w','w','w','s','w',
+}
 Xp.sreenMoves = {
   -- Get to end of path where Prince spawns
   'e','se','pull grate','d','e', 'w', 'u', 'ne', 'nw', 'se', 'd', 'e', 's','n', 'e', 'se', 'e',
@@ -29,7 +41,7 @@ Xp.lirathMoves = {
 -- More complex triggers: https://wiki.mudlet.org/w/Manual:Lua_Functions#tempTrigger
 function Xp.startPathing()
   Xp.startAttackTimer()
-  continuePathTrigger = tempTrigger("Cannot find mock", Xp.continuePath)
+  continuePathTrigger2 = tempTrigger("Cannot find noyan,tribesman", Xp.continuePath)
 end
 
 function Xp.stopPathing()
@@ -38,13 +50,12 @@ function Xp.stopPathing()
 end
 
 function Xp.continuePath()
-  if Xp.CURRENT_MOVE < #Xp.lirathMoves then
-    send(_G[Xp.LOCATION .. 'Moves'][Xp.CURRENT_MOVE])
+  if Xp.CURRENT_MOVE <= #Xp.campMoves then
+    send(Xp.campMoves[Xp.CURRENT_MOVE])
     Xp.CURRENT_MOVE = Xp.CURRENT_MOVE + 1
   else
-    cecho("\n<red:yellow>You've reached the end of your path!")
-    if not Xp.LOOP then
-      Xp.CURRENT_MOVE = 1
+    send("Loop me daddy!")
+    Xp.CURRENT_MOVE = 1
   end
 end
 
@@ -57,6 +68,7 @@ function Xp.stopAttackTimer()
 end
 
 function Xp.sendAttackCommands()
-  send("kill mock")
-  send("cast plasma blast")
+  send("kill noyan,tribesman")
+  send("lt noyan,tribesman")
 end
+
